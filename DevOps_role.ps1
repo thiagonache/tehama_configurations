@@ -10,15 +10,10 @@ if(Test-Path $PSScriptRoot/modules/Vela-Utils.psm1) {
 $apps = @(
   "putty",
   "git",
-  "vim",
-  "conemu",
   "python",
   "visualstudiocode",
-  "sublimetext3",
   "terraform",
   "postman",
-  "cygwin",
-  "superputty",
   "grepwin",
   "jq",
   "wget",
@@ -48,19 +43,6 @@ $remote_files = @{
   "https://github.com/Wox-launcher/Wox/releases/download/v1.3.424/Wox-1.3.424.exe" = "C:\ProgramData\chocolatey\bin\Wox.exe"
 }
 
-# Searchable list of Cygwin packages available at https://cygwin.com/cgi-bin2/package-grep.cgi
-# or via cli in Cygwin by 'apt-cyg searchall <packagename>'
-$cygwin_packages = @(
-  "python2",
-  "python-pip",
-  "openssl",
-  "openssl-devel",  # Required for ansible
-  "python-crypto",  # Required for ansible
-  "python-openssl", # Required for ansible
-  "python-yaml",    # Required for ansible
-  "python-jinja2"   # Required for ansible
-)
-
 # Ansible client doesn't work on windows outside of cygwin today.
 $git_repos = @{
   "https://github.com/ansible/ansible" = "C:\tools\cygwin\opt\ansible"
@@ -85,14 +67,8 @@ Set-VelaWorkspaceConfiguration `
   -WindowsFeatures $windows_features `
   -RemoteFiles $remote_files `
   -PipPackages $pip_packages `
-  -CygwinPackages $cygwin_packages `
   -GitRepos $git_repos `
   -Paths $paths
-
-# Copy ansible libs into cygwin python lib folder
-if (-Not (Test-Path C:\tools\cygwin\lib\python2.7\ansible)) {
-  Copy-Item C:\tools\cygwin\opt\ansible\lib\* C:\tools\cygwin\lib\python2.7 -Recurse
-}
 
 #Start Wox
 if (-Not (get-process 'Wox' -ea SilentlyContinue)) {
