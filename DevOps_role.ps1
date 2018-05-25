@@ -19,16 +19,13 @@ $apps = @(
   "wget",
   "curl",
   "webstorm",
-  "googlechrome",
-  "slack",
-  "chefdk",
-  "packer",
-  "puppet"
+  "googlechrome"
 )
 
 # Searchable list of Python packages available by running 'pip3 search <packagename>'
 $pip_packages = @(
-  "awscli"
+  "awscli",
+  "ipython"
 )
 
 # Searchable list of windows features available by running 'Get-WindowsFeature'
